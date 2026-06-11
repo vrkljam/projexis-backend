@@ -16,10 +16,24 @@ const PORT = process.env.PORT || 5500;
 // ==========================================
 // 1. MIDDLEWARE
 // ==========================================
+
+const allowedOrigins = [
+  "http://localhost:5173", // Local Vite dev
+  "https://quevex.onrender.com", // Production frontend
+];
 // CORS configuration to allow cross-device network requests
 app.use(
   cors({
-    origin: "https://quevex.onrender.com", // We will restrict this to your frontend URL later during deployment
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, Postman, curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("CORS not allowed from this origin"));
+      }
+    },
     credentials: true,
   }),
 );
