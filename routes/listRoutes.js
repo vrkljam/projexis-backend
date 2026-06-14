@@ -3,10 +3,16 @@ const router = express.Router();
 
 const { protect } = require("../middleware/authMiddleware");
 
-const { createList, deleteList } = require("../controllers/listController");
+const {
+  createList,
+  deleteList,
+  updateList,
+} = require("../controllers/listController");
 
 // CREATE NEW LIST (COLUMN)
 router.post("/", protect, createList);
+
+router.put("/:id", updateList);
 
 // DELETE A LIST
 router.delete("/:id", protect, deleteList);

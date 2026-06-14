@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5500;
 // ==========================================
 
 const allowedOrigins = [
-  "http://localhost:5173", // Local Vite dev
+  "http://localhost:5174", // Local Vite dev
   "https://quevex.onrender.com", // Production frontend
 ];
 // CORS configuration to allow cross-device network requests

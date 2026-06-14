@@ -34,6 +34,28 @@ const createList = async (req, res) => {
   }
 };
 
+const updateList = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, color } = req.body;
+
+    const list = await List.findById(id);
+    if (!list) {
+      return res.status(404).json({ message: "List not found" });
+    }
+
+    // Only update fields that exist
+    if (title !== undefined) list.title = title;
+    if (color !== undefined) list.color = color;
+
+    const updatedList = await list.save();
+
+    res.json(updatedList);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // @desc    Delete a column
 // @route   DELETE /api/lists/:id
 // @access  Private
@@ -64,5 +86,6 @@ const deleteList = async (req, res) => {
 
 module.exports = {
   createList,
+  updateList,
   deleteList,
 };
